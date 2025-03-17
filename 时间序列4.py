@@ -17,7 +17,7 @@ def load_data(uploaded_file):
         try:
             data = pd.read_excel(uploaded_file, engine="openpyxl")
             st.write("数据预览：")
-            st.dataframe(data)  # 显示完整数据
+            st.dataframe(data)  # 显示完整数据，不进行四舍五入
             if data.iloc[:, 0].dtype in [np.int64, np.float64]:
                 data.set_index(data.columns[0], inplace=True)
         except Exception as e:
@@ -30,7 +30,6 @@ def load_data(uploaded_file):
         })
         data.set_index("标测电极", inplace=True)
     return data
-
 # 加载数据
 data = load_data(uploaded_file)
 
