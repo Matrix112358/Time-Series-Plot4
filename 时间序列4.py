@@ -14,12 +14,15 @@ uploaded_file = st.file_uploader("上传你的 Excel 文件", type=["xlsx", "xls
 def load_data(uploaded_file):
     """ 加载用户上传的数据或使用默认数据 """
     if uploaded_file is not None:
-        data = pd.read_excel(uploaded_file)
-        st.write("数据预览：")
-        st.write(data.head())
-        # 自动检测第一列是否为索引列
-        if data.iloc[:, 0].dtype in [np.int64, np.float64]:
-            data.set_index(data.columns[0], inplace=True)
+        try:
+            data = pd.read_excel(uploaded_file, engine="openpyxl")
+            st.write("数据预览：")
+            st.dataframe(data)  # 显示完整数据
+            if data.iloc[:, 0].dtype in [np.int64, np.float64]:
+                data.set_index(data.columns[0], inplace=True)
+        except Exception as e:
+            st.error(f"文件加载失败，请上传正确的 Excel 文件！错误信息: {str(e)}")
+            return None
     else:
         data = pd.DataFrame({
             "标测电极": range(1, 61),
