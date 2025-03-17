@@ -59,7 +59,7 @@ st.header("时间序列图")
 fig_width = 10 * x_spacing
 fig, axes = plt.subplots(3, 1, figsize=(fig_width, 10))
 x_values = np.arange(len(data.columns)) * x_spacing
-titles = [f"电极 {electrode_a}", f"电极 {electrode_b}", f"电极 {electrode_a} - {electrode_b}"]
+titles = [f"{electrode_a}", f"{electrode_b}", f"{electrode_a} - {electrode_b}"]
 data_series = [diff_a, diff_b, diff_ab]
 
 for ax, title, series in zip(axes, titles, data_series):
